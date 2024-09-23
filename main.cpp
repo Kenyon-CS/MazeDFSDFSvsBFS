@@ -45,23 +45,17 @@ public:
 
     // Solve the maze using Depth-First Search (DFS)
     void solveMazeDFS(vector<vector<char>>& map) {
-        bool success = iterativeDFS(map, 1, 1);
-        if (!success) {
-            cout << "No solution to maze!" << endl;
-        }
+        iterativeDFS(map, 1, 1);
     }
 
     // Solve the maze using Breadth-First Search (BFS)
     void solveMazeBFS(vector<vector<char>>& map) {
-        bool success = iterativeBFS(map, 1, 1);
-        if (!success) {
-            cout << "No solution to maze!" << endl;
-        }
+        iterativeBFS(map, 1, 1);
     }
 
 private:
     // Iterative DFS using a stack
-    bool iterativeDFS(vector<vector<char>>& map, int start_i, int start_j) {
+    void iterativeDFS(vector<vector<char>>& map, int start_i, int start_j) {
         stack<pair<int, int>> stk;
         stk.push({start_i, start_j});
         int directions[][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
@@ -88,12 +82,10 @@ private:
                 }
             }
         }
-
-        return false;
     }
 
     // Iterative BFS using a queue
-    bool iterativeBFS(vector<vector<char>>& map, int start_i, int start_j) {
+    void iterativeBFS(vector<vector<char>>& map, int start_i, int start_j) {
         queue<pair<int, int>> q;
         q.push({start_i, start_j});
         int directions[][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
@@ -120,8 +112,6 @@ private:
                 }
             }
         }
-
-        return false;
     }
 
     // DFS to create random paths in the maze
