@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <random>
 
 using namespace std;
 
@@ -125,6 +126,11 @@ private:
 
     // DFS to create random paths in the maze
     void createMazePaths(vector<vector<char>>& map, int i, int j) {
+
+        
+        random_device rd;  // Seed for the random number generator
+        mt19937 g(rd());   // Standard mersenne_twister_engine seeded with rd()
+        
         int directions[][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
         int visitOrder[] = {0, 1, 2, 3};
 
