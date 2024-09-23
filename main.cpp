@@ -42,7 +42,7 @@ public:
     }
     
     void solveMaze(vector<vector<char> >& map){
-		bool success = _search(map,1,1);
+		bool success = iterativeDFS(map,1,1);
 		if (!success) {
 			cout << "No solution to maze!";
 		}
