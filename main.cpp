@@ -57,19 +57,27 @@ private:
     // Iterative DFS using a stack
     void iterativeDFS(vector<vector<char>>& map, int start_i, int start_j) {
         stack<pair<int, int>> stk;
+        vector<pair<int,int> > path;
         stk.push({start_i, start_j});
         int directions[][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
 
         while (!stk.empty()) {
             auto [i, j] = stk.top();
+            pair current = stk.top();
             stk.pop();
-
+             
             // Skip visited cells or boundaries
-            if (map[i][j] == '=' || map[i][j] == '*' || map[i][j] == '.' || map[i][j] == '%') continue;
+            if (map[i][j] == '=' || map[i][j] == '*' || map[i][j] == '.' ) continue;
 
             // If exit is found
-            if (map[i][j] == 'E') return;
-
+            if (map[i][j] == 'E') {
+                // mark the path back to start
+                for (pair loc: path) {
+                    auto [i, j] = stk.top();
+                    map[i][j] == '%';
+                }
+                return;
+            }
             // Mark current cell as visited
             map[i][j] = '.';
 
@@ -78,9 +86,11 @@ private:
                 int new_i = i + direction[0];
                 int new_j = j + direction[1];
                 if (new_i >= 0 && new_i < map.size() && new_j >= 0 && new_j < map[0].size()) {
+                    path.push_back(current);   // Save the path
                     stk.push({new_i, new_j});
                 }
             }
+            path.pop_back();  // remove current path since it didn't pan out
         }
     }
 
