@@ -68,7 +68,7 @@ private:
             if (map[i][j] == '=' || map[i][j] == '*' || map[i][j] == '.' || map[i][j] == '%') continue;
 
             // If exit is found
-            if (map[i][j] == 'E') return true;
+            if (map[i][j] == 'E') return;
 
             // Mark current cell as visited
             map[i][j] = '.';
@@ -98,7 +98,7 @@ private:
             if (map[i][j] == '=' || map[i][j] == '*' || map[i][j] == '.' || map[i][j] == '%') continue;
 
             // If exit is found
-            if (map[i][j] == 'E') return true;
+            if (map[i][j] == 'E') return;
 
             // Mark current cell as visited
             map[i][j] = '.';
