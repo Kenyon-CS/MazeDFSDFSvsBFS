@@ -1,7 +1,7 @@
 # Makefile for finding unique substrings using std::set
 
 CXX = g++
-CXXFLAGS = -Wall -std=c++11
+CXXFLAGS = -Wall -std=c++17
 
 # Target to compile and link the program
 unique_substrings: main.o
