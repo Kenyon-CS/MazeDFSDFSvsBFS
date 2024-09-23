@@ -1,170 +1,194 @@
-#include "string"
-#include "vector"
-#include "unordered_map"
-#include "queue"
-#include "cstdlib"
-#include "ctime"
 #include <iostream>
-#include "algorithm"
-#include "stack"
+#include <vector>
+#include <queue>
+#include <stack>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+
 using namespace std;
 
-class Maze{
+// Maze Class
+class Maze {
 public:
-  // Definition for Maze.
-    void maze(vector<vector<char> >& map){
-        //U unvisited, ' ' visited
-        for (int i = 0; i < map.size(); ++i)
-        {
-            for (int j = 0; j < map[0].size(); ++j)
-            {
-                if (i == 0 ||  i == map.size()-1 || j == 0 ||  j == map[0].size()-1) {
-                	map[i][j] = '=';
+    // Function to generate a maze with boundaries ('=') and walls ('*')
+    void generateMaze(vector<vector<char>>& map) {
+        // Initialize maze boundaries and walls
+        for (int i = 0; i < map.size(); ++i) {
+            for (int j = 0; j < map[0].size(); ++j) {
+                if (i == 0 || i == map.size() - 1 || j == 0 || j == map[0].size() - 1) {
+                    map[i][j] = '='; // Boundary
                 } else {
-            		map[i][j] = '*';
+                    map[i][j] = '*'; // Wall
                 }
             }
         }
-        _maze(map, 1, 1);
-        map[1][1] = 'S';
-        map[map.size()-2][map[0].size()-2] = 'E';
+
+        // Create maze paths using DFS
+        createMazePaths(map, 1, 1);
+
+        // Set the start 'S' and exit 'E' positions
+        map[1][1] = 'S'; // Start
+        map[map.size() - 2][map[0].size() - 2] = 'E'; // Exit
     }
 
-    void showMaze(vector<vector<char> >& map){
-        for (int i = 0; i < map.size(); ++i)
-        {
-            for (int j = 0; j < map[0].size(); ++j)
-            {
-                cout<<map[i][j];
+    // Display the maze on the console
+    void showMaze(const vector<vector<char>>& map) {
+        for (const auto& row : map) {
+            for (const char& cell : row) {
+                cout << cell;
             }
-            cout<<endl;
+            cout << endl;
         }
     }
-    
-    void solveMaze(vector<vector<char> >& map){
-		bool success = iterativeDFS(map,1,1);
-		if (!success) {
-			cout << "No solution to maze!";
-		}
+
+    // Solve the maze using Depth-First Search (DFS)
+    void solveMazeDFS(vector<vector<char>>& map) {
+        bool success = iterativeDFS(map, 1, 1);
+        if (!success) {
+            cout << "No solution to maze!" << endl;
+        }
     }
-    
+
+    // Solve the maze using Breadth-First Search (BFS)
+    void solveMazeBFS(vector<vector<char>>& map) {
+        bool success = iterativeBFS(map, 1, 1);
+        if (!success) {
+            cout << "No solution to maze!" << endl;
+        }
+    }
+
+private:
     // Iterative DFS using a stack
-bool iterativeDFS(vector<vector<char> >& map, int start_i, int start_j)
-{
-    int direct[][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
-    stack<pair<int, int>> stk;
+    bool iterativeDFS(vector<vector<char>>& map, int start_i, int start_j) {
+        stack<pair<int, int>> stk;
+        stk.push({start_i, start_j});
+        int directions[][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
 
-    // Push the starting point onto the stack
-    stk.push({start_i, start_j});
+        while (!stk.empty()) {
+            auto [i, j] = stk.top();
+            stk.pop();
 
-    while (!stk.empty()) {
-        // Get current position
-        pair<int, int> curr = stk.top();
-        stk.pop();
+            // Skip visited cells or boundaries
+            if (map[i][j] == '=' || map[i][j] == '*' || map[i][j] == '.' || map[i][j] == '%') continue;
 
-        int i = curr.first;
-        int j = curr.second;
+            // If exit is found
+            if (map[i][j] == 'E') return true;
 
-        // Check if hit edge, a wall, or a visited cell
-        if (map[i][j] == '=' || map[i][j] == '*' || map[i][j] == '.' || map[i][j] == '%') continue;
+            // Mark current cell as visited
+            map[i][j] = '.';
 
-        // Check if we have reached the exit 'E'
-        if (map[i][j] == 'E') return true;
-
-        // Mark the current position as visited
-        map[i][j] = '.';
-
-        // Explore all four directions
-        for (int k = 0; k < 4; ++k) {
-            int newi = i + direct[k][0];
-            int newj = j + direct[k][1];
-
-            // If the new position is within bounds, push it onto the stack
-            if (newi >= 0 && newi < map.size() && newj >= 0 && newj < map[0].size()) {
-                stk.push({newi, newj});
+            // Explore all four directions
+            for (auto& direction : directions) {
+                int new_i = i + direction[0];
+                int new_j = j + direction[1];
+                if (new_i >= 0 && new_i < map.size() && new_j >= 0 && new_j < map[0].size()) {
+                    stk.push({new_i, new_j});
+                }
             }
         }
 
-        // Mark the path with '%' to indicate breadcrumbs
-        map[i][j] = '%';
-	    //cout << i << "," << j << " ";
+        return false;
     }
 
-    // Return false if no path to 'E' was found
-    return false;
-}
-    
-    //Use DFS to create maze
-    void _maze(vector<vector<char> >& map, int i, int j){
-        int direct[][2] = {{0,1}, {0,-1}, {-1,0}, {1,0}};
-        int visitOrder[] = {0,1,2,3};
-        //out of boundary
-        if (map[i][j] == '=') return;
-        #ifdef DEBUG
-        cout<<"("<<i<<", "<<j<<")"<<endl;
-        #endif
-        //visited, go back to the coming direction, return 
-        if(map[i][j] == ' ') return ;
+    // Iterative BFS using a queue
+    bool iterativeBFS(vector<vector<char>>& map, int start_i, int start_j) {
+        queue<pair<int, int>> q;
+        q.push({start_i, start_j});
+        int directions[][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
 
-        //some neightbors are visited in addition to the coming direction, return
-        //this is to avoid circles in maze
-        if(countVisitedNeighbor(map, i, j) > 1) return ;
+        while (!q.empty()) {
+            auto [i, j] = q.front();
+            q.pop();
 
-        map[i][j] = ' '; // visited
+            // Skip visited cells or boundaries
+            if (map[i][j] == '=' || map[i][j] == '*' || map[i][j] == '.' || map[i][j] == '%') continue;
 
-        //shuffle the visitOrder
-        shuffle(visitOrder, 4);
-        
-        for (int k = 0; k < 4; ++k)
-        {
-            int ni = i + direct[visitOrder[k]][0];
-            int nj = j + direct[visitOrder[k]][1];
-            _maze(map, ni, nj);
+            // If exit is found
+            if (map[i][j] == 'E') return true;
+
+            // Mark current cell as visited
+            map[i][j] = '.';
+
+            // Explore all four directions
+            for (auto& direction : directions) {
+                int new_i = i + direction[0];
+                int new_j = j + direction[1];
+                if (new_i >= 0 && new_i < map.size() && new_j >= 0 && new_j < map[0].size()) {
+                    q.push({new_i, new_j});
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // DFS to create random paths in the maze
+    void createMazePaths(vector<vector<char>>& map, int i, int j) {
+        int directions[][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
+        int visitOrder[] = {0, 1, 2, 3};
+
+        if (map[i][j] == '=') return; // Boundary check
+        if (map[i][j] == ' ') return; // Already visited
+
+        // Check to avoid loops by ensuring minimal visited neighbors
+        if (countVisitedNeighbors(map, i, j) > 1) return;
+
+        map[i][j] = ' '; // Mark as visited (path)
+
+        // Shuffle directions to randomize maze generation
+        random_shuffle(visitOrder, visitOrder + 4);
+
+        for (int k = 0; k < 4; ++k) {
+            int new_i = i + directions[visitOrder[k]][0];
+            int new_j = j + directions[visitOrder[k]][1];
+            createMazePaths(map, new_i, new_j);
         }
     }
 
-    int countVisitedNeighbor(vector<vector<char> >& map, int i, int j){
-        int direct[][2] = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+    // Count the number of visited neighbors of a cell
+    int countVisitedNeighbors(const vector<vector<char>>& map, int i, int j) {
+        int directions[][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
         int count = 0;
-        for (int k = 0; k < 4; ++k)
-        {
-            int ni = i + direct[k][0];
-            int nj = j + direct[k][1];
-            //out of boundary
-            if (map[i][j] == '=') continue;
-            if(map[ni][nj] == ' ') count++;//visited
+        for (auto& direction : directions) {
+            int new_i = i + direction[0];
+            int new_j = j + direction[1];
+            if (new_i >= 0 && new_i < map.size() && new_j >= 0 && new_j < map[0].size()) {
+                if (map[new_i][new_j] == ' ') count++;
+            }
         }
         return count;
     }
-    void shuffle(int a[], int n){
-        for (int i = 0; i < n; ++i)
-        {
-            swap(a[i], a[rand() % n]);
-        }
-    }
-    void swap(int & a, int &b){
-        int c = a;
-        a = b;
-        b = c;
-    }
 };
 
-
-int main(int argc, char const *argv[])
-{
-	Maze s;
+// Main function to run the maze generation and solving
+int main() {
+    Maze maze;
     int height = 30;
     int width = 60;
+
+    // Seed random number generator
     srand(time(0));
-    vector<char> row(width+2);
-    vector<vector<char> > map;
-    for (int i = 0; i < height+2; ++i)
-    {
-        map.push_back(row);
-    }
-    s.maze(map);
-    s.showMaze(map);
-    s.solveMaze(map);
-    s.showMaze(map);
+
+    // Create an empty maze grid with borders
+    vector<vector<char>> map(height + 2, vector<char>(width + 2));
+
+    // Generate and display the maze
+    maze.generateMaze(map);
+    maze.showMaze(map);
+
+    // Solve the maze using BFS (or DFS if preferred)
+    maze.solveMazeBFS(map);
+
+    // Display the solved maze
+    cout << "BFS Solution\n";;
+    maze.showMaze(map);
+
+    // Solve the maze using DFS
+    maze.solveMazeDFS(map);
+
+    // Display the solved maze
+    cout << "DFS Solution\n";;
+    maze.showMaze(map);
     return 0;
 }
