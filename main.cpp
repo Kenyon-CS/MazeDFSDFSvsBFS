@@ -75,7 +75,7 @@ private:
             // If exit is found
             if (mazemap[i][j] == 'E') {
                 // mark the path back to start
-                for (pair loc={i,j}; (path.find(loc) != path.end()); loc=path.find(loc)){
+                for (pair loc={i,j}; (path.find(loc) != path.end()); loc=path[loc]){
                     auto [i, j] = loc;
                     cout << i << "," << j <<" : ";
                 }
