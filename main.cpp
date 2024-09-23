@@ -86,7 +86,7 @@ private:
                 int new_i = i + direction[0];
                 int new_j = j + direction[1];
                 if (new_i >= 0 && new_i < mazemap.size() && new_j >= 0 && new_j < mazemap[0].size()) {
-                    path[current]={new_i, new_j}
+                    path[current]={new_i, new_j};
                     stk.push({new_i, new_j});
                 }
             }
