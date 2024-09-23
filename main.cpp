@@ -75,7 +75,11 @@ private:
             // If exit is found
             if (mazemap[i][j] == 'E') {
                 // mark the path back to start
-
+                for (pair loc={i,j}; (path.find(loc) != mymap.end()); loc=path.find(loc)){
+                    auto [i, j] = loc;
+                    cout << i << "," << j <<" : ";
+                }
+                    
                 return;
             }
             // Mark current cell as visited
