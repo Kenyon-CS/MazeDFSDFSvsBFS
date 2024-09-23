@@ -167,28 +167,28 @@ int main() {
     srand(time(0));
 
     // Create an empty maze grid with borders
-    vector<vector<char>> maze(height + 2, vector<char>(width + 2));
-    vector<vector<char>> maze2;
+    vector<vector<char>> map(height + 2, vector<char>(width + 2));
+    vector<vector<char>> map2;
     
     // Generate 2 identical mazes
-    maze.generateMaze(maze);
-    maze2=maze;
+    maze.generateMaze(map);
+    map2=map;
 
     // Display the maze
-    maze.showMaze(maze);
+    maze.showMaze(map);
 
     // Solve the maze using BFS (or DFS if preferred)
-    maze.solveMazeBFS(maze);
+    maze.solveMazeBFS(map);
 
     // Display the solved maze
     cout << "BFS Solution\n";;
-    maze.showMaze(maze);
+    maze.showMaze(map);
 
     // Solve the maze2 using DFS
-    maze.solveMazeDFS(maze2);
+    maze.solveMazeDFS(map2);
 
     // Display the solved maze
     cout << "DFS Solution\n";;
-    maze.showMaze(maze2);
+    maze.showMaze(map2);
     return 0;
 }
