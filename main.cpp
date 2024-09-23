@@ -168,7 +168,7 @@ int main() {
 
     // Create an empty maze grid with borders
     vector<vector<char>> maze(height + 2, vector<char>(width + 2));
-    vector<vector<char>> maze2(height + 2, vector<char>(width + 2));
+    vector<vector<char>> maze2;
     
     // Generate 2 identical mazes
     maze.generateMaze(maze);
