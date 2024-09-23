@@ -70,7 +70,7 @@ private:
             if (map[i][j] == '=' || map[i][j] == '*' || map[i][j] == '.' ) continue;
 
             // If exit is found
-            if (map[i][j] == 'E') {
+            if (map[i][j] = 'E') {
                 // mark the path back to start
                 for (pair loc: path) {
                     auto [i, j] = stk.top();
