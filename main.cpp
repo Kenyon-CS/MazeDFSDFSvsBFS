@@ -56,6 +56,19 @@ public:
     }
 
 private:
+// Function to print the map
+void printPath(const map<std::pair<int, int>, pair<int, int>>& path) {
+    for (const auto& entry : path) {
+        // Access key and value pairs
+        pair<int, int> key = entry.first;
+        pair<int, int> value = entry.second;
+
+        // Print the key and value
+        cout << "Key: (" << key.first << ", " << key.second << ")"
+                  << " -> Value: (" << value.first << ", " << value.second << ")\n";
+    }
+}
+
     // Iterative DFS using a stack
     void iterativeDFS(vector<vector<char>>& mazemap, int start_i, int start_j) {
         stack<pair<int, int>> stk;
@@ -74,6 +87,7 @@ private:
 
             // If exit is found
             if (mazemap[i][j] == 'E') {
+                printPath(path);
                 // mark the path back to start
                 for (pair loc={i,j}; (path.find(loc) != path.end()); loc=path[loc]){
                     auto [i, j] = loc;
