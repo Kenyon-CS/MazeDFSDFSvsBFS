@@ -74,7 +74,7 @@ private:
                 // mark the path back to start
                 for (pair loc: path) {
                     auto [i, j] = loc;
-                    cout << i<<","<<j<< " ";
+                    cout << loc << " ";
                     map[i][j] = '%';
                 }
                 return;
