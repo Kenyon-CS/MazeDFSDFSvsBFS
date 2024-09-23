@@ -182,7 +182,7 @@ int main() {
     
     // Generate 2 identical mazes
     maze.generateMaze(maze);
-    maze2=mazel;
+    maze2=maze;
 
     // Display the maze
     maze.showMaze(maze);
