@@ -143,7 +143,7 @@ private:
         map[i][j] = ' '; // Mark as visited (path)
 
         // Shuffle directions to randomize maze generation
-        shuffle(visitOrder, visitOrder + 4);
+        shuffle(visitOrder, visitOrder + 4, g);
 
         for (int k = 0; k < 4; ++k) {
             int new_i = i + directions[visitOrder[k]][0];
