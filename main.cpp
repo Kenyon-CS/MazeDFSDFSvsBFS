@@ -87,7 +87,7 @@ bool iterativeDFS(vector<vector<char> >& map, int start_i, int start_j)
 
         // Mark the path with '%' to indicate breadcrumbs
         map[i][j] = '%';
-	    cout << i << "<" << j << " ";
+	    //cout << i << "," << j << " ";
     }
 
     // Return false if no path to 'E' was found
