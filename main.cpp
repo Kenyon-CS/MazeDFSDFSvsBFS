@@ -73,7 +73,7 @@ private:
             if (map[i][j] == 'E') {
                 // mark the path back to start
                 for (pair loc: path) {
-                    cout << pair << " ";
+                    cout << loc << " ";
                     auto [i, j] = stk.top();
                     map[i][j] = '%';
                 }
