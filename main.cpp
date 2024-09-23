@@ -89,12 +89,12 @@ void printPath(const map<std::pair<int, int>, pair<int, int>>& path) {
 
             // If exit is found
             if (mazemap[i][j] == 'E') {
-                printPath(path);
+                //printPath(path);
                 // mark the path back to start
-                /*for (pair loc={i,j}; (path.find(loc) != path.end()); loc=path[loc]){
+                for (pair loc={i,j}; (path.find(loc) != path.end()); loc=path[loc]){
                     auto [i, j] = loc;
                     cout << i << "," << j <<" : ";
-                }*/
+                }
                     
                 return;
             }
