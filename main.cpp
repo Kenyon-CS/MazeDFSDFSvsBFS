@@ -66,7 +66,7 @@ bool iterativeDFS(vector<vector<char> >& map, int start_i, int start_j)
         int j = curr.second;
 
         // Check if hit edge, a wall, or a visited cell
-        if (map[i][j] == '=' || map[i][j] == '*' || map[i][j] == '.') continue;
+        if (map[i][j] == '=' || map[i][j] == '*' || map[i][j] == '.' || map[i][j] == '%') continue;
 
         // Check if we have reached the exit 'E'
         if (map[i][j] == 'E') return true;
