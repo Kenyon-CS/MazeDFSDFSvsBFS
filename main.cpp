@@ -89,10 +89,10 @@ void printPath(const map<std::pair<int, int>, pair<int, int>>& path) {
             if (mazemap[i][j] == 'E') {
                 printPath(path);
                 // mark the path back to start
-                for (pair loc={i,j}; (path.find(loc) != path.end()); loc=path[loc]){
+                /*for (pair loc={i,j}; (path.find(loc) != path.end()); loc=path[loc]){
                     auto [i, j] = loc;
                     cout << i << "," << j <<" : ";
-                }
+                }*/
                     
                 return;
             }
@@ -104,7 +104,7 @@ void printPath(const map<std::pair<int, int>, pair<int, int>>& path) {
                 int new_i = i + direction[0];
                 int new_j = j + direction[1];
                 if (new_i >= 0 && new_i < mazemap.size() && new_j >= 0 && new_j < mazemap[0].size()) {
-                    path[{new_i, new_j}]=current;
+                    path[{new_i, new_j}]=current;  // current node points to the previous node
                     stk.push({new_i, new_j});
                 }
             }
