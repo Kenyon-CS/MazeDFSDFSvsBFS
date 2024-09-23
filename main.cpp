@@ -89,9 +89,9 @@ private:
                 if (new_i >= 0 && new_i < map.size() && new_j >= 0 && new_j < map[0].size()) {
                     path.push_back(current);   // Save the path
                     stk.push({new_i, new_j});
+                    path.pop_back();  // remove current path since it didn't pan out
                 }
             }
-            path.pop_back();  // remove current path since it didn't pan out
         }
     }
 
