@@ -75,9 +75,10 @@ void printPath(const map<std::pair<int, int>, pair<int, int>>& path) {
         map<pair<int,int>, pair<int,int> > path;  // A map from a pair to it's previous node
         stk.push({start_i, start_j});
         int directions[][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
-        pair<int, int> prev = {start_i, start_j};
+        pair prev = {start_i, start_j};
 
         while (!stk.empty()) {
+            prev = current;
             pair current = stk.top();
             auto [i, j] = current;
             stk.pop();
