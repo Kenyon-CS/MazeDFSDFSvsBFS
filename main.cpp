@@ -185,7 +185,7 @@ int main() {
     //maze.showMaze(map);
 
     // Solve the maze2 using DFS
-    maze.solveMazeDFS(map2);
+    //maze.solveMazeDFS(map2);
 
     // Display the solved maze
     cout << "DFS Solution\n";;
