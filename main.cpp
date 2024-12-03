@@ -178,14 +178,14 @@ int main() {
     maze.showMaze(map);
 
     // Solve the maze using BFS (or DFS if preferred)
-    //maze.solveMazeBFS(map);
+    maze.solveMazeBFS(map);
 
     // Display the solved maze
-    //cout << "BFS Solution\n";;
-    //maze.showMaze(map);
+    cout << "BFS Solution\n";;
+    maze.showMaze(map);
 
     // Solve the maze2 using DFS
-    //maze.solveMazeDFS(map2);
+    maze.solveMazeDFS(map2);
 
     // Display the solved maze
     cout << "DFS Solution\n";;
